@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểu dữ liệu & Toán tử trong JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 10px;
+        }
+        #result {
+            font-weight: bold;
+            color: blue;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Thực hành JavaScript</h2>
+
+    <label for="num1">Nhập số thứ nhất:</label>
+    <input type="number" id="num1">
+    <br>
+    <label for="num2">Nhập số thứ hai:</label>
+    <input type="number" id="num2">
+    <br>
+    
+    <button onclick="calculate()">Tính toán</button>
+    <button onclick="checkEven()">Kiểm tra số chẵn</button>
+    <button onclick="checkGreaterThanTen()">Kiểm tra > 10</button>
+    <button onclick="getDayOfWeek()">Lấy ngày trong tuần</button>
+
+    <p id="result"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>
