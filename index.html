@@ -3,40 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiểu dữ liệu & Toán tử trong JavaScript</title>
+    <title>Bài Tập JS Cơ Bản 2</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        input, button {
-            margin: 5px;
-            padding: 10px;
-        }
-        #result {
-            font-weight: bold;
-            color: blue;
-            margin-top: 10px;
-        }
+        body { font-family: Arial, sans-serif;  margin: 20px; }
+        button { margin: 5px; padding: 10px; font-size: 16px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; text-align: left; font-size: 20px20px;}
     </style>
 </head>
 <body>
-    <h2>Thực hành JavaScript</h2>
+    <h2>Bài Tập JavaScript Cơ Bản 2</h2>
 
-    <label for="num1">Nhập số thứ nhất:</label>
-    <input type="number" id="num1">
-    <br>
-    <label for="num2">Nhập số thứ hai:</label>
-    <input type="number" id="num2">
-    <br>
-    
-    <button onclick="calculate()">Tính toán</button>
-    <button onclick="checkEven()">Kiểm tra số chẵn</button>
-    <button onclick="checkGreaterThanTen()">Kiểm tra > 10</button>
-    <button onclick="getDayOfWeek()">Lấy ngày trong tuần</button>
+    <h3>1. Hàm (Function)</h3>
+    <button onclick="testFactorial()">Tính Giai Thừa</button>
+    <button onclick="testFibonacci()">Tính Fibonacci</button>
 
-    <p id="result"></p>
+    <h3>2. Chuỗi (String)</h3>
+    <button onclick="testPalindrome()">Kiểm Tra Palindrome</button>
+    <button onclick="testMostFrequentChar()">Ký Tự Xuất Hiện Nhiều Nhất</button>
+
+    <h3>3. Đối Tượng và Lớp</h3>
+    <button onclick="testPerson()">Test Lớp Person</button>
+    <button onclick="testRectangle()">Test Lớp Rectangle</button>
+
+    <h3>4. Vòng Lặp (Loop)</h3>
+    <button onclick="testPrimeNumbers()">Liệt Kê Số Nguyên Tố</button>
+    <button onclick="testSumMultiples()">Tính Tổng Chia Hết Cho 3 hoặc 5</button>
+
+    <h3>5. Xử Lý Mảng (Array)</h3>
+    <button onclick="testSecondLargest()">Số Lớn Thứ Hai</button>
+    <button onclick="testCountOccurrences()">Đếm Số Lần Xuất Hiện</button>
+
+    <h3>Kết Quả</h3>
+    <pre id="result">Nhấn vào nút để xem kết quả...</pre>
 
     <script src="script.js"></script>
 </body>
