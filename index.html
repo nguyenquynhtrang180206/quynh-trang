@@ -1,41 +1,276 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Tập JS Cơ Bản 2</title>
-    <style>
-        body { font-family: Arial, sans-serif;  margin: 20px; }
-        button { margin: 5px; padding: 10px; font-size: 16px; cursor: pointer; }
-        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; text-align: left; font-size: 20px20px;}
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SmartCharge — Sạc nhanh, Sạc chất</title>
+  <style>
+    /* =====================
+       Theme & Reset
+       ===================== */
+    :root{--accent:#0ea5e9;--bg:#071827;--card:#0b1220;--muted:#9aa6b2;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,var(--bg) 0%, #071026 70%);color:#e6eef6;-webkit-font-smoothing:antialiased}
+
+    /* =====================
+       Layout
+       ===================== */
+    .container{max-width:1200px;margin:0 auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;color:#022}
+    nav a{color:var(--muted);margin-left:16px;text-decoration:none}
+
+    /* =====================
+       Hero section (clear split)
+       ===================== */
+    .hero{display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start;margin-top:8px}
+    .card{background:var(--glass);padding:20px;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.55)}
+    .hero-title{font-size:26px;margin:0 0 8px}
+    .hero-desc{color:var(--muted);line-height:1.45}
+    .cta{display:inline-block;margin-top:12px;padding:10px 16px;border-radius:10px;background:var(--accent);color:#022;font-weight:700;text-decoration:none}
+
+    /* battery visual */
+    .battery-wrap{display:flex;gap:14px;align-items:center;margin-top:12px}
+    .battery{width:220px;height:70px;border-radius:10px;background:#0b1622;padding:8px;border:2px solid rgba(255,255,255,0.06);position:relative}
+    .battery:after{content:'';position:absolute;right:-14px;top:22px;width:12px;height:26px;background:#0b1622;border-radius:2px}
+    .level{height:100%;width:12%;background:linear-gradient(90deg,#ef4444,#f59e0b,#10b981);border-radius:6px;transition:width 900ms cubic-bezier(.2,.9,.3,1)}
+    .specs{margin-top:10px;color:var(--muted);font-size:14px}
+
+    /* =====================
+       Products grid (separated section)
+       ===================== */
+    section.products{margin-top:20px}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .product{padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+    .p-visual{height:110px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+    .p-title{font-weight:700;margin:8px 0}
+    .p-meta{color:var(--muted);font-size:13px}
+    .buy{margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+    .price{font-weight:800}
+
+    /* =====================
+       Simulator & Game are grouped clearly
+       ===================== */
+    .tools{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+    .sim .form-row{display:flex;gap:8px;margin-top:10px}
+    input,select,button{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+    .btn{cursor:pointer;border:none}
+    .btn-primary{background:var(--accent);color:#022;font-weight:700;padding:8px 12px;border-radius:8px}
+    .game .progress{height:18px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden}
+    .game .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#06b6d4,#10b981);transition:width 450ms}
+
+    /* =====================
+       Blog & Footer
+       ===================== */
+    .blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+    footer{margin-top:28px;padding:18px 0;color:var(--muted);text-align:center}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .tools{grid-template-columns:1fr}
+      nav a{display:none}
+    }
+  </style>
 </head>
 <body>
-    <h2>Bài Tập JavaScript Cơ Bản 2</h2>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo">SC</div>
+        <div>
+          <h1 style="margin:0">SmartCharge</h1>
+          <div style="font-size:12px;color:var(--muted)">Sạc nhanh — An toàn — Thông minh</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#products">Sản phẩm</a>
+        <a href="#simulator">Thử sạc</a>
+        <a href="#game">Mini-game</a>
+        <a href="#blog">Blog</a>
+      </nav>
+    </header>
 
-    <h3>1. Hàm (Function)</h3>
-    <button onclick="testFactorial()">Tính Giai Thừa</button>
-    <button onclick="testFibonacci()">Tính Fibonacci</button>
+    <!-- Hero (Main) -->
+    <section class="hero">
+      <div class="card">
+        <h2 class="hero-title">Pin yếu? Sạc nhanh an toàn chỉ trong tích tắc.</h2>
+        <p class="hero-desc">SmartCharge kết hợp công nghệ PD &amp; GaN để sạc nhanh, giữ pin bền và an toàn. Chọn đúng sạc cho điện thoại của bạn — chúng tôi đã tối ưu sẵn.</p>
 
-    <h3>2. Chuỗi (String)</h3>
-    <button onclick="testPalindrome()">Kiểm Tra Palindrome</button>
-    <button onclick="testMostFrequentChar()">Ký Tự Xuất Hiện Nhiều Nhất</button>
+        <!-- Battery visual + quick CTA -->
+        <div class="battery-wrap">
+          <div class="battery" role="img" aria-label="battery">
+            <div class="level" id="batteryLevel" style="width:12%"></div>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:18px" id="batteryLabel">1%</div>
+            <div class="specs">Thời gian ước tính: <span id="estTime">—</span></div>
+            <a class="cta" href="#simulator">Chọn sạc phù hợp</a>
+          </div>
+        </div>
 
-    <h3>3. Đối Tượng và Lớp</h3>
-    <button onclick="testPerson()">Test Lớp Person</button>
-    <button onclick="testRectangle()">Test Lớp Rectangle</button>
+        <!-- Key features row (clear bullets) -->
+        <ul style="margin-top:14px;color:var(--muted);line-height:1.6">
+          <li>Tốc độ sạc nhanh (PD / GaN)</li>
+          <li>Chất lượng kiểm định, bảo hành 12–18 tháng</li>
+          <li>Đổi cũ lấy mới &amp; chính sách bảo vệ môi trường</li>
+        </ul>
+      </div>
 
-    <h3>4. Vòng Lặp (Loop)</h3>
-    <button onclick="testPrimeNumbers()">Liệt Kê Số Nguyên Tố</button>
-    <button onclick="testSumMultiples()">Tính Tổng Chia Hết Cho 3 hoặc 5</button>
+      <!-- Right column: Simulator (kept isolated) -->
+      <aside class="card" style="min-height:260px">
+        <h3 style="margin:0">Công cụ chọn sạc</h3>
+        <div class="sim" id="simulator">
+          <label>Model điện thoại</label>
+          <select id="phoneModel">
+            <option value="iphone13">iPhone 13</option>
+            <option value="iphone12">iPhone 12</option>
+            <option value="s22">Samsung S22</option>
+            <option value="xiaomi12">Xiaomi 12</option>
+            <option value="other">Khác</option>
+          </select>
 
-    <h3>5. Xử Lý Mảng (Array)</h3>
-    <button onclick="testSecondLargest()">Số Lớn Thứ Hai</button>
-    <button onclick="testCountOccurrences()">Đếm Số Lần Xuất Hiện</button>
+          <div class="form-row">
+            <input type="number" id="currentPct" min="1" max="99" placeholder="Phần trăm hiện tại (1-99)" />
+            <button class="btn-primary btn" id="simulateBtn">Tính thời gian</button>
+          </div>
 
-    <h3>Kết Quả</h3>
-    <pre id="result">Nhấn vào nút để xem kết quả...</pre>
+          <p style="margin-top:10px;color:var(--muted)"><strong>Kết quả:</strong> <span id="simResult">Hãy nhập thông tin và nhấn 'Tính thời gian'</span></p>
+        </div>
+      </aside>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- Products section (separate container) -->
+    <section id="products" class="products container" style="padding:0">
+      <h3 style="margin:6px 0 12px 0">Sản phẩm nổi bật</h3>
+      <div class="products-grid">
+        <div class="product card">
+          <div class="p-visual" style="background:linear-gradient(135deg,#06283d,#0ea5e9);">GaN 65W</div>
+          <div class="p-title">SmartCharge GaN 65W</div>
+          <div class="p-meta">PD 3.0 • Hỗ trợ 2 cổng • Bảo hành 18 tháng</div>
+          <div class="p-meta">Thời gian 0→50% (iPhone 13): ~20 phút</div>
+          <div class="buy"><div class="price">₫699.000</div><button class="btn" onclick="addToCart('SmartCharge GaN 65W')">Thêm</button></div>
+        </div>
+
+        <div class="product card">
+          <div class="p-visual" style="background:linear-gradient(135deg,#0f1724,#06b6d4);">20W PD</div>
+          <div class="p-title">SmartCharge PD 20W</div>
+          <div class="p-meta">PD • 1 cổng • Bảo hành 12 tháng</div>
+          <div class="p-meta">Thời gian 0→50% (iPhone 13): ~30 phút</div>
+          <div class="buy"><div class="price">₫199.000</div><button class="btn" onclick="addToCart('SmartCharge PD 20W')">Thêm</button></div>
+        </div>
+
+        <div class="product card">
+          <div class="p-visual" style="background:linear-gradient(135deg,#022,#10b981);">Cáp PD</div>
+          <div class="p-title">Cáp Type-C to Lightning 1.5m</div>
+          <div class="p-meta">Hỗ trợ sạc nhanh PD • Dây bện chống gãy</div>
+          <div class="p-meta">Tương thích: iPhone &amp; Android (Type-C)</div>
+          <div class="buy"><div class="price">₫129.000</div><button class="btn" onclick="addToCart('Cáp PD 1.5m')">Thêm</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools row: Simulator (redundant link) + Mini-game grouped clearly -->
+    <div class="tools">
+      <div class="card">
+        <h4 style="margin:0">Thử sạc nâng cao</h4>
+        <p style="color:var(--muted);margin-top:8px">Nhập phần trăm hiện tại và xem ước tính thời gian với các loại sạc phổ biến.</p>
+        <!-- (Reuses the same simulator controls for easier access on small screens) -->
+        <div style="margin-top:8px">
+          <label>Model điện thoại</label>
+          <select id="phoneModel2" aria-hidden="true" style="width:100%;margin-top:6px">
+            <option value="iphone13">iPhone 13</option>
+            <option value="iphone12">iPhone 12</option>
+            <option value="s22">Samsung S22</option>
+            <option value="xiaomi12">Xiaomi 12</option>
+            <option value="other">Khác</option>
+          </select>
+          <div class="form-row">
+            <input type="number" id="currentPct2" min="1" max="99" placeholder="Phần trăm hiện tại (1-99)" />
+            <button class="btn-primary btn" id="simulateBtn2">Tính thời gian</button>
+          </div>
+          <p style="margin-top:8px;color:var(--muted)"><strong>Kết quả:</strong> <span id="simResult2">—</span></p>
+        </div>
+      </div>
+
+      <div class="card game" id="game">
+        <h4 style="margin:0">Mini-game: Đua Pin (Nhận voucher)</h4>
+        <p style="color:var(--muted);margin-top:8px">Nhấn nút để "sạc". Mỗi lần nhấn, % sẽ tăng ngẫu nhiên. Đạt 100% để nhận mã giảm giá.</p>
+        <div class="progress" style="margin-bottom:12px"><i id="gameProgress"></i></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary btn" id="gameBtn">Sạc!</button>
+          <button class="btn" id="resetGame">Đặt lại</button>
+        </div>
+        <p id="gameMsg" style="margin-top:10px;color:var(--muted)"></p>
+      </div>
+    </div>
+
+    <!-- Blog -->
+    <section id="blog" style="margin-top:20px">
+      <h3>Blog &amp; Tips</h3>
+      <div class="blog-grid">
+        <article class="card">
+          <h4 style="margin:0">5 mẹo sạc đúng cách để tăng tuổi thọ pin</h4>
+          <p style="color:var(--muted);font-size:14px">Đừng để pin xuống 0% thường xuyên, tránh sạc liên tục qua đêm, dùng sạc chính hãng hoặc PD/GaN khi cần sạc nhanh...</p>
+        </article>
+        <article class="card">
+          <h4 style="margin:0">GaN là gì và vì sao nhanh hơn?</h4>
+          <p style="color:var(--muted);font-size:14px">GaN (Gallium Nitride) giúp chuyển đổi điện năng hiệu quả hơn, nhỏ gọn và tỏa ít nhiệt...</p>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <div>© SmartCharge 2025 — Thiết kế mẫu. Liên hệ: support@smartcharge.example</div>
+    </footer>
+  </div>
+
+  <script>
+    // ======== Model speed config (shared) ========
+    const modelSpeeds = {iphone13:0.4, iphone12:0.45, s22:0.35, xiaomi12:0.33, other:0.6};
+    function formatMinutes(min){ if(min < 60) return Math.round(min) + ' phút'; const h=Math.floor(min/60); const m=Math.round(min%60); return h + 'h ' + (m>0? m + 'p':''); }
+
+    // Primary simulator (hero)
+    function runSim(modelInputId, pctInputId, resultId){
+      const model = document.getElementById(modelInputId).value;
+      const pct = parseInt(document.getElementById(pctInputId).value,10);
+      if(!pct || pct<1 || pct>99){ document.getElementById(resultId).innerText = 'Vui lòng nhập phần trăm hợp lệ (1–99).'; return; }
+      const speed = modelSpeeds[model] || modelSpeeds.other;
+      const remain = 100 - pct;
+      const time20 = remain * speed * 1.2;
+      const time65 = remain * speed * 0.6;
+      document.getElementById(resultId).innerText = `Từ ${pct}% → 100%: Khoảng ${formatMinutes(time65)} (GaN/65W) — ${formatMinutes(time20)} (20W).`;
+      // update hero battery only for the main visual
+      if(resultId === 'simResult'){
+        document.getElementById('batteryLevel').style.width = pct + '%';
+        document.getElementById('batteryLabel').innerText = pct + '%';
+        document.getElementById('estTime').innerText = formatMinutes(time65);
+      }
+    }
+
+    document.getElementById('simulateBtn').addEventListener('click',()=>runSim('phoneModel','currentPct','simResult'));
+    document.getElementById('simulateBtn2').addEventListener('click',()=>runSim('phoneModel2','currentPct2','simResult2'));
+
+    // ======== mini-game ========
+    let gamePct = 0; const progressEl = document.getElementById('gameProgress'); const msgEl = document.getElementById('gameMsg');
+    document.getElementById('gameBtn').addEventListener('click',()=>{
+      if(gamePct >= 100) return;
+      const inc = Math.floor(Math.random()*18) + 6; // 6% - 23%
+      gamePct = Math.min(100, gamePct + inc);
+      progressEl.style.width = gamePct + '%';
+      if(gamePct >= 100){ msgEl.innerText = 'Chúc mừng! Bạn đạt 100% — mã giảm giá: SC10OFF'; }
+      else { msgEl.innerText = 'Sạc...' + gamePct + '%'; }
+    });
+    document.getElementById('resetGame').addEventListener('click',()=>{gamePct=0;progressEl.style.width='0%';msgEl.innerText='';});
+
+    // ======== cart placeholder ========
+    function addToCart(name){ alert(name + ' đã được thêm vào giỏ (demo).'); }
+
+    // ======== Hero subtle animation ========
+    (function demoAnim(){ let v = 12; setInterval(()=>{ v += Math.random()*1.8; if(v>22) v = 12 + Math.random()*6; const w = Math.round(v); document.getElementById('batteryLevel').style.width = w + '%'; document.getElementById('batteryLabel').innerText = w + '%'; },2200) })();
+  </script>
 </body>
 </html>
